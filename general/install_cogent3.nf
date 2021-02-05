@@ -1,4 +1,4 @@
-process setup_cogent3 {
+process install_cogent3 {
     tag { 'Install Cogent3' }
 
     input:

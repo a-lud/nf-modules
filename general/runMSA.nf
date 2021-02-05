@@ -14,9 +14,6 @@ process runMSA {
     output:
         tuple val(ids), path("*_msa.fasta"), emit: alignments
         file "*"
-    
-    when:
-        cogent_check == false
 
     script:
         def opt = aligner_args ?: ''
