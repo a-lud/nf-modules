@@ -4,6 +4,7 @@ process runMSA {
     label "parallel_low"
 
     input:
+        val cogent_check
         file peptides
         val ids
         val outdir
@@ -13,6 +14,9 @@ process runMSA {
     output:
         tuple val(ids), path("*_msa.fasta"), emit: alignments
         file "*"
+    
+    when:
+        cogent_check == false
 
     script:
         def opt = aligner_args ?: ''
