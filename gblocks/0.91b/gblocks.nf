@@ -1,4 +1,4 @@
-process runGblocks {
+process gblocks {
     tag { 'Gblocks' }
     publishDir "${outdir}/clean_alignments", mode: 'copy'
     label "parallel_low"
