@@ -13,7 +13,7 @@ process install_cogent3 {
     script:
         """
         pip3 install cogent3
-        if [[ $? == 0 ]]; then
+        if [[ \$? == 0 ]]; then
             touch /hpcfs/users/\$LOGNAME/nf-condaEnvs/cogentInstallCheck.ok
         fi
         """
