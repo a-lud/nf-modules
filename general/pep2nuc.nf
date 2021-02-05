@@ -13,8 +13,6 @@ process pep2nuc {
         path "*_translated.fasta", emit: translated
         file "parallel_p2n.log"
         file "*"
-    when:
-        wf.contains('msa_pipeline') && pep2nuc
 
     script:
         """
