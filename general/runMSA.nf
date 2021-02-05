@@ -1,7 +1,7 @@
 process runMSA {
     tag { 'MSA: ' + aligner }
     publishDir "${outdir}/alignment_out", mode: 'copy'
-    // label "parallel_low"
+    label "parallel_low"
 
     input:
         file peptides
@@ -20,25 +20,25 @@ process runMSA {
         """
             parallel -j ${task.cpus} \\
             --joblog parallel_msa.log \\
-            "mafft --thread 1 ${opt_args} {} > {/.}_msa.fasta" ::: ${peptides}
+            "mafft --thread 1 ${opt} {} > {/.}_msa.fasta" ::: ${peptides}
         """
         } else if(aligner == 'tcoffee') {
             """
             parallel -j ${task.cpus} \\
             --joblog parallel_msa.log \\
-            "t_coffee -thread 1 ${opt_args} -in {} -output=fasta_aln; mv {/.}.fasta_aln {/.}_msa. fasta" ::: ${peptides}
+            "t_coffee -thread 1 ${opt} -in {} -output=fasta_aln; mv {/.}.fasta_aln {/.}_msa. fasta" ::: ${peptides}
             """
         } else if(aligner == 'clustal') {
             """
             parallel -j ${task.cpus} \\
             --joblog parallel_msa.log \\
-            "clustalo --threads=1 ${opt_args} -i {} -o {/.}_msa.fasta" ::: ${peptides}
+            "clustalo --threads=1 ${opt} -i {} -o {/.}_msa.fasta" ::: ${peptides}
             """
         } else if(aligner == 'muscle') {
             """
             parallel -j ${task.cpus} \\
             --joblog parallel_msa.log \\
-            "muscle -in {} -out {/.}_msa.fasta ${opt_args}" ::: ${peptides}
+            "muscle -in {} -out {/.}_msa.fasta ${opt}" ::: ${peptides}
             """
         }
 }
