@@ -4,8 +4,6 @@ process fel {
     label "parallel_low"
 
     input:
-        // file aln
-        // file tree
         tuple file(aln), file(tree)
         val outdir
         val fel_optional
@@ -16,8 +14,8 @@ process fel {
     script:
         def opt = fel_optional ?: ''
         """
-        echo "parallel -j ${task.cpus} \\
+        parallel -j ${task.cpus} \\
         --joblog parallel_hyphy-FEL.log \\
-        hyphy fel --alignment {} --tree ${tree} ${opt} ::: ${aln}" > FEL-${tree.baseName}.json
+        hyphy fel --alignment {} --tree ${tree} --output FEL-{/.}_${tree.baseName}.json ${opt} ::: ${aln}
         """
 }
