@@ -4,8 +4,9 @@ process fel {
     label "parallel_low"
 
     input:
-        file aln
-        file tree
+        // file aln
+        // file tree
+        tuple file(aln), file(tree)
         val outdir
         val fel_optional
 
