@@ -18,6 +18,6 @@ process fel {
         """
         echo "parallel -j ${task.cpus} \\
         --joblog parallel_hyphy-FEL.log \\
-        hyphy fel --alignment {} --tree ${tree} ${opt} ::: ${aln}" > FEL.json
+        hyphy fel --alignment {} --tree ${tree} ${opt} ::: ${aln}" > FEL-${tree.baseName}.json
         """
 }
