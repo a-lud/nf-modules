@@ -11,7 +11,7 @@ process fel {
         val fel_optional
 
     output:
-        file "FEL.json"
+        file "*.json"
 
     script:
         def opt = fel_optional ?: ''
