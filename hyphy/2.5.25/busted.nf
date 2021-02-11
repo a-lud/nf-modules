@@ -1,4 +1,4 @@
-process absrel {
+process busted {
     tag { 'HyPhy - BUSTED' }
     publishDir "${outdir}/hyphy/busted", mode: 'copy'
     label "parallel_low"

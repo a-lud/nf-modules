@@ -1,4 +1,4 @@
-process absrel {
+process relax {
     tag { 'HyPhy - RELAX' }
     publishDir "${outdir}/hyphy/relax", mode: 'copy'
     label "parallel_low"
