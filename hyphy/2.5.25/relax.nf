@@ -10,6 +10,7 @@ process relax {
 
     output:
         file "*.json"
+        file "*.log"
 
     script:
         def opt = relax_optional ?: ''

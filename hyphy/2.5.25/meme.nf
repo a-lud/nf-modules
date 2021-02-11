@@ -10,6 +10,7 @@ process meme {
 
     output:
         file "*.json"
+        file "*.log"
 
     script:
         def opt = meme_optional ?: ''

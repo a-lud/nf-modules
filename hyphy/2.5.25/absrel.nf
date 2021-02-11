@@ -10,6 +10,7 @@ process absrel {
 
     output:
         file "*.json"
+        file "*.log"
 
     script:
         def opt = absrel_optional ?: ''

@@ -10,6 +10,7 @@ process fubar {
 
     output:
         file "*.json"
+        file "*.log"
 
     script:
         def opt = fubar_optional ?: ''

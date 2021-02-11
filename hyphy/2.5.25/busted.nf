@@ -10,6 +10,7 @@ process busted {
 
     output:
         file "*.json"
+        file "*.log"
 
     script:
         def opt = busted_optional ?: ''

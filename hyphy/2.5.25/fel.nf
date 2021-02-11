@@ -10,6 +10,7 @@ process fel {
 
     output:
         file "*.json"
+        file "*.log"
 
     script:
         def opt = fel_optional ?: ''
