@@ -1,7 +1,7 @@
 process relax {
     tag { 'HyPhy - RELAX' }
     publishDir "${outdir}/hyphy/relax", mode: 'copy'
-    label "parallel_low"
+    label "parallel_med"
 
     input:
         tuple file(aln), file(tree)

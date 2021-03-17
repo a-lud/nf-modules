@@ -1,7 +1,7 @@
 process absrel {
     tag { 'HyPhy - aBSREL' }
     publishDir "${outdir}/hyphy/absrel", mode: 'copy'
-    label "parallel_low"
+    label "parallel_med"
 
     input:
         tuple file(aln), file(tree)

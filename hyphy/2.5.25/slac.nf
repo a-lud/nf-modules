@@ -1,7 +1,7 @@
 process slac {
     tag { 'HyPhy - SLAC' }
     publishDir "${outdir}/hyphy/slac", mode: 'copy'
-    label "parallel_low"
+    label "parallel_med"
 
     input:
         tuple file(aln), file(tree)

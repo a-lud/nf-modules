@@ -1,7 +1,7 @@
 process meme {
     tag { 'HyPhy - MEME' }
     publishDir "${outdir}/hyphy/meme", mode: 'copy'
-    label "parallel_low"
+    label "parallel_med"
 
     input:
         tuple file(aln), file(tree)

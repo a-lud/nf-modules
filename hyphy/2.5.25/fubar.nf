@@ -1,7 +1,7 @@
 process fubar {
     tag { 'HyPhy - FUBAR' }
     publishDir "${outdir}/hyphy/fubar", mode: 'copy'
-    label "parallel_low"
+    label "parallel_med"
 
     input:
         tuple file(aln), file(tree)
