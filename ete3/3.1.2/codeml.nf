@@ -3,6 +3,7 @@ process codeml {
 
     publishDir "${outdir}/codeml/${id}", mode: 'copy'
     conda "$projectDir/conf/ete.yaml"
+    label 'resource_low'
 
     input:
         tuple val(id), file(alignment), file(tree)
