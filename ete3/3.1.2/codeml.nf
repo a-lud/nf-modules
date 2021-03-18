@@ -10,6 +10,7 @@ process codeml {
         val models
         val tests
         val codemlOptional
+        val outdir
 
     output:
         file "*"
