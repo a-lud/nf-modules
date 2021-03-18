@@ -12,8 +12,7 @@ process codeml {
         val codemlOptional
 
     output:
-        file "out"
-        file "tmp.ctl"
+        file "*"
         file "results_codeml.txt"
 
     script:
