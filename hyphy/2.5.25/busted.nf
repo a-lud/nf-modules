@@ -1,7 +1,7 @@
 process busted {
     tag { 'HyPhy - BUSTED' }
     publishDir "${outdir}/hyphy/busted", mode: 'copy'
-    label "parallel_med"
+    label "parallel_high"
 
     input:
         tuple file(aln), file(tree)
