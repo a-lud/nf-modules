@@ -27,7 +27,8 @@ process codeml {
             -t ${tree} \
             --alg ${alignment} \
             -o \${PWD} \
-            ${models} ${tests} ${opt_args}
+            --models ${models} \
+            ${tests} ${opt_args}
         
         cp .command.out results_codeml.txt
         """        
