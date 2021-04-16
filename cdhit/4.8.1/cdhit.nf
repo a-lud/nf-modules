@@ -1,5 +1,5 @@
 process cdhit {
-    tag { 'CD-HIT - ' + transcripts }
+    tag { 'CD-HIT - ' + id }
     publishDir "${outdir}/cdhit/${id}", mode: 'copy'
     label "parallel_low"
 

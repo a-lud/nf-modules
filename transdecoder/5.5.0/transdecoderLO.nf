@@ -9,7 +9,7 @@ process transdecoderLO {
     
     output:
         tuple val(id), file(transcripts), file("${id}.gene_trans_map"), file("*"), emit: all
-        tuple val(id),  file("longest_orfs.pep"), emti: longstORF
+        tuple val(id),  file("longest_orfs.pep"), emit: longstORF
 
     script:
         """

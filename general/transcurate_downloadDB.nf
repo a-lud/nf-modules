@@ -1,13 +1,13 @@
 process downloadDB {
     tag { 'Download Databases' }
-    publishDir "${outdir}/databases", mode: 'copy'
-    label "parallel_low"
+    publishDir "${outdir}", mode: 'copy'
+    label "singleCore_low"
 
     input:
         val outdir
     
     output:
-        path "${outdir}/databases", emit: database_dir
+        path "databases", emit: database_files
 
     script:
         """
@@ -22,5 +22,8 @@ process downloadDB {
         wget ftp://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz
         gunzip Pfam-A.hmm.gz
         hmmpress Pfam-A.hmm
+
+        mkdir databases
+        mv uniprot_sprot.* Pfam* databases
         """
 }
