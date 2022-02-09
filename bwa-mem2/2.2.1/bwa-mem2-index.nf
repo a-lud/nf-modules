@@ -3,6 +3,8 @@ process bwa_mem2_index {
     publishDir "${outdir}/hifiasm/bwa-mem2-index", mode: 'copy'
     label "singleCore_low"
 
+    conda "$projectDir/conf/bwa2.yaml"
+
     input:
         tuple val(id), file(haplotype)
         val outdir

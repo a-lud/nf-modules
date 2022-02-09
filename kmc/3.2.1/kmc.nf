@@ -1,11 +1,10 @@
 process kmc {
     tag { 'KMC - ' + id }
-    publishDir "${outdir}/genome-size", mode: 'copy'
+    publishDir "${outdir}/genome-size/kmc-${id}", mode: 'copy'
+    label "parallel_max_high"
 
-    cpus 30
-    time '24h'
-    memory '100 GB'
-
+    conda "$projectDir/conf/kmc.yaml"
+    
     input:
         tuple val(id), file(fastq)
         val outdir
@@ -16,7 +15,7 @@ process kmc {
     script:
         """
         kmc \
-            -k 31 \
+            -k31 \
             -t${task.cpus} \
             -m64 \
             -ci2 \

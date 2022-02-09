@@ -1,10 +1,10 @@
 process pin_hic {
     tag { 'pin_hic - ' + id }
-    publishDir "${outdir}/scaffold-hic/${id}", mode: 'copy'
+    publishDir "${outdir}/assembly-scaffold/${id}", mode: 'copy'
     label "singleCore_high"
 
     input:
-        tuple val(id), file(haplotype), file(bam)
+        tuple val(id), file(haplotype), file(fai), file(bam)
         val outdir
     
     output:
@@ -12,12 +12,13 @@ process pin_hic {
         path "*.wig", emit: wig
         path "*.sat", emit: sat
         path "*.mat", emit: mat
+        
     script:
         """
         pin_hic \
 		    -O . \
 		    -q 20 \
-		    -x ${haplotype}.fai \
+		    -x ${fai} \
 		    -r ${haplotype} \
 		    ${bam}
 

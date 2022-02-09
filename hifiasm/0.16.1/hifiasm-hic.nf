@@ -1,11 +1,9 @@
 process hifiasm_hic {
     tag { 'hifiasm - ' + id }
-    publishDir "${outdir}/hifiasm", mode: 'copy'
-    label "parallel_low"
+    publishDir "${outdir}/assembly-contigs/${id}", mode: 'copy'
+    label "parallel_max_high"
 
-    cpus 30
-    time '24h'
-    memory '100 GB'
+    conda "$projectDir/conf/hifiasm.yaml"
 
     input:
         tuple val(id), file(fastq)

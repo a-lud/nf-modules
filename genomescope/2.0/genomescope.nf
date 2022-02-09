@@ -3,6 +3,8 @@ process genomescope {
     publishDir "${outdir}/genome-size", mode: 'copy'
     label "singleCore_low"
 
+    conda "$projectDir/conf/genomescope2.yaml"
+
     input:
         tuple val(id), file(histo), file(db)
         val outdir

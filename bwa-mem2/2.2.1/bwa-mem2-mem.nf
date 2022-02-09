@@ -3,6 +3,8 @@ process bwa_mem2_mem {
     publishDir "${outdir}/scaffold-hic/${id_haplotype}", mode: 'copy'
     label "parallel_med"
 
+    conda "$projectDir/conf/bwa2.yaml"
+
     input:
         tuple val(id_haplotype), 
               file(haplotype), 
@@ -13,7 +15,7 @@ process bwa_mem2_mem {
         val outdir
     
     output:
-        tuple val(id_haplotype), file(haplotype), file("*.bam"), emit: bam
+        tuple val(id_haplotype), file(haplotype), file(fai), file("*.bam"), emit: bam
     script:
         """
         bwa-mem2 mem \
