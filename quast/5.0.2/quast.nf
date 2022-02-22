@@ -1,26 +1,26 @@
 process quast {
-    tag { 'QUAST' + id }
-    publishDir "${outdir}/quast", mode: 'copy'
+    tag { 'QUAST' }
+    publishDir "${outdir}/post-assembly-qc", mode: 'copy'
     label "parallel_low"
 
     conda "$projectDir/conf/quast.yaml"
 
     input:
-        tuple val(id), file(fasta)
+        file fastas
         val outdir
     
     output:
-        path "${id}-quast"
+        path "quast/*"
 
     script:
         """
         quast \
-            --output-dir ${id}-quast \
+            --output-dir quast \
             --threads ${task.cpus} \
             --split-scaffolds \
             --eukaryote \
             --plots-format png \
             --no-icarus \
-            ${fasta}
+            ${fastas}
         """
 }

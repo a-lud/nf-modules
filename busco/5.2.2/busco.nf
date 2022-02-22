@@ -1,7 +1,7 @@
 process busco {
-    tag { 'BUSCO' + stage + id }
-    publishDir "${outdir}/busco", mode: 'copy'
-    label "parallel_max_med"
+    tag { 'BUSCO ' + stage + ' ' + id }
+    publishDir "${outdir}/post-assembly-qc", mode: 'copy'
+    label "cores_mem_high_time_low"
 
     conda "$projectDir/conf/busco.yaml"
 
@@ -12,8 +12,8 @@ process busco {
         val outdir
     
     output:
-        path "${stage}-${id}"
-
+        path "busco-${stage}-${id}"
+        path "busco-${stage}-${id}/short_summary*", emit: summary
 
     script:
         """
@@ -21,12 +21,14 @@ process busco {
 
         busco \
             -i ${fasta} \
-            -o ${stage}-${id} \
+            -o busco-${stage}-${id} \
             -m geno \
             -l ${buscoDB} \
             --cpu ${task.cpus} \
-            -e 1e-10 \
+            --metaeuk_parameters="--disk-space-limit=10G,--remove-tmp-files=1" \
+            --metaeuk_rerun_parameters="--disk-space-limit=10G,--remove-tmp-files=1" \
             --out_path \$PWD \
-            --tar
+            --tar \
+            --offline
         """
 }

@@ -1,7 +1,8 @@
 process bwa_mem2_mem {
-    tag { "bwa_mem2_mem - ${id_haplotype} ${id_hic}" }
-    publishDir "${outdir}/scaffold-hic/${id_haplotype}", mode: 'copy'
-    label "parallel_med"
+    tag { "bwa_mem2_mem ${id_haplotype} ${id_hic}" }
+    // publishDir "${outdir}/assembly-scaffold/${id_haplotype}", mode: 'copy'
+    publishDir enabled: false // Don't need big bam file saved
+    label "cores_max_mem_time_med"
 
     conda "$projectDir/conf/bwa2.yaml"
 
@@ -16,6 +17,7 @@ process bwa_mem2_mem {
     
     output:
         tuple val(id_haplotype), file(haplotype), file(fai), file("*.bam"), emit: bam
+        
     script:
         """
         bwa-mem2 mem \
