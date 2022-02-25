@@ -1,8 +1,7 @@
 process seqkit_fq2fa {
     tag { 'seqkit ' + id }
-    // publishDir "${outdir}/hifi-fasta", mode: 'copy'
     publishDir enabled: false
-    label "parallel_low"
+    label "cores_max_mem_time_low"
 
     conda "$projectDir/conf/seqkit.yaml"
 

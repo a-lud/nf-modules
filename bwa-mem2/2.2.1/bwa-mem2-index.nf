@@ -1,6 +1,6 @@
 process bwa_mem2_index {
-    tag { 'bwa_mem2_index ' + id }
-    publishDir "${outdir}/assembly-contigs/bwa-mem2-index", mode: 'copy'
+    tag { 'BWA Index ' + id }
+    publishDir enabled: false
     
     cpus 1
     time '2h'

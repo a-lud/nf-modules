@@ -1,7 +1,7 @@
 process busco {
-    tag { 'BUSCO ' + stage + ' ' + id }
-    publishDir "${outdir}/post-assembly-qc", mode: 'copy'
-    label "cores_mem_high_time_low"
+    tag { "BUSCO ${id} ${stage}" }
+    publishDir "${outdir}/post-assembly-qc/busco", mode: 'copy'
+    label "cores_mem_high_time_med"
 
     conda "$projectDir/conf/busco.yaml"
 
@@ -12,8 +12,8 @@ process busco {
         val outdir
     
     output:
-        path "busco-${stage}-${id}"
-        path "busco-${stage}-${id}/short_summary*", emit: summary
+        path "${stage}-${id}"
+        path "${stage}-${id}/short_summary*", emit: summary
 
     script:
         """
@@ -21,7 +21,7 @@ process busco {
 
         busco \
             -i ${fasta} \
-            -o busco-${stage}-${id} \
+            -o ${stage}-${id} \
             -m geno \
             -l ${buscoDB} \
             --cpu ${task.cpus} \

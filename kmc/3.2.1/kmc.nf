@@ -1,6 +1,7 @@
 process kmc {
-    tag { 'KMC' + id }
-    publishDir "${outdir}/genome-size/kmc-${id}", mode: 'copy'
+    tag { 'KMC ' + id }
+    // publishDir "${outdir}/genome-size/kmc-${id}", mode: 'copy'
+    publishDir enabled: false
     label "cores_mem_high_time_med"
 
     conda "$projectDir/conf/kmc.yaml"

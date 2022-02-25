@@ -8,7 +8,7 @@ process pin_hic {
         val outdir
     
     output:
-        tuple val(id), path("${id}.scaffolds.fa"), emit: scaffolds
+        tuple val(id), path("${id}.scaffold.fa"), emit: scaffolds
         path "*.{wig,sat,mat}"
         
     script:
@@ -20,8 +20,6 @@ process pin_hic {
 		    -r ${haplotype} \
 		    ${bam}
 
-        if [[ ! -s ${id}.scaffolds.fa ]]; then
-            mv scaffolds_final.fa ${id}.scaffolds.fa
-        fi
+        mv scaffolds_final.fa ${id}.scaffold.fa
         """
 }
