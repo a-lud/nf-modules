@@ -1,9 +1,9 @@
 process busco_plot {
     tag { 'BUSCO plot' }
-    publishDir "${outdir}/post-assembly-qc/busco-figure", mode: 'copy'
+    publishDir "${outdir}/post-assembly-qc/busco", mode: 'copy'
     label "cores_mem_time_low"
 
-    conda "$projectDir/conf/busco.yaml"
+    conda "$projectDir/conf/R.yaml"
 
     input:
         file summaries
@@ -14,6 +14,6 @@ process busco_plot {
 
     script:
         """
-        generate_plot.py -wd .
+        busco-plot-updated.R
         """
 }

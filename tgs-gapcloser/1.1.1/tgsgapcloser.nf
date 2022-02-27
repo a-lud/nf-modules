@@ -10,9 +10,9 @@ process tgsgapcloser {
         val outdir
     
     output:
-        tuple val(id), path("${id}-tgs.scaff_seqs"), emit: scaff_detailed
-        path "${id}-tgs.scaff_seqs", emit: scaff
-        path "*"
+        tuple val(id), path("${id}.fa"), emit: scaff_detailed
+        path "${id}.fa", emit: scaff
+        path "*.{log,paf,gap_fill_detail,name_map,original_scaff_infos,updated_scaff_infos}"
 
     script:
         """
@@ -26,5 +26,7 @@ process tgsgapcloser {
             --ne \
             --tgstype pb \
             --thread ${task.cpus}
+
+        mv ${id}-tgs.scaff_seqs ${id}.fa
         """
 }
