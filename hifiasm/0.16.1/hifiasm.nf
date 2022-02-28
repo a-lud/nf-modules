@@ -1,7 +1,7 @@
 process hifiasm {
-    tag { 'hifiasm - ' + id }
+    tag { 'hifiasm ' + id }
     publishDir "${outdir}/assembly-contigs/${id}", mode: 'copy'
-    label "parallel_max_high"
+    label "cores_max_mem_time_high"
 
     conda "$projectDir/conf/hifiasm.yaml"
 
@@ -10,8 +10,8 @@ process hifiasm {
         val outdir
     
     output:
-        path "${id}.p_ctg.gfa"
-        tuple val (id), file("${id}.p_ctg.fa"), emit: fa
+        path "*"
+        tuple val (id), file("${id}.fa"), emit: fa
 
     script:
         """
@@ -20,6 +20,6 @@ process hifiasm {
             -t ${task.cpus}
             ${fastq}
         
-        awk '/^S/{print \">\"\$2;print \$3}' ${id}.p_ctg.gfa > ${id}.p_ctg.fa
+        gfatools gfa2fa -l 80 ${id}.p_ctg.gfa > ${id}.fa
         """
 }
