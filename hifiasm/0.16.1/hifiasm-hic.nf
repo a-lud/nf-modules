@@ -12,7 +12,7 @@ process hifiasm_hic {
     
     output:
         path '*'
-        tuple file("${id}-hap1.fa"), file("${id}-hap2.fa"), emit: hap_fa
+        tuple file("${id}-p_ctg.fa"), file("${id}-hap1.fa"), file("${id}-hap2.fa"), emit: hap_fa
 
     script:
         """
@@ -25,5 +25,6 @@ process hifiasm_hic {
 
         gfatools gfa2fa -l 80 ${id}.hic.hap1.p_ctg.gfa > ${id}-hap1.fa
         gfatools gfa2fa -l 80 ${id}.hic.hap2.p_ctg.gfa > ${id}-hap2.fa
+        gfatools gfa2fa -l 80 ${id}.hic.p_ctg.gfa > ${id}-p_ctg.fa
         """
 }
