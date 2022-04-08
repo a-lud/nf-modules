@@ -8,9 +8,13 @@ process busco_plot {
     input:
         file summaries
         val outdir
+        val scaffolds_checked
     
     output:
         path "*.png"
+
+    when:
+        scaffolds_checked == true
 
     script:
         """

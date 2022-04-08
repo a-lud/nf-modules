@@ -1,15 +1,19 @@
 process pin_hic {
-    tag { 'pin_hic - ' + id }
-    publishDir "${outdir}/assembly-scaffold/${id}", mode: 'copy'
-    label "cores_low_mem_time_high"
+    tag { 'pin_hic_ ' + id }
+    publishDir "${outdir}/assembly-scaffold/pin_hic-${id}", mode: 'copy', pattern: "*.{fa,wig,sat,mat,agp}"
+    label "scaffolding"
 
     input:
-        tuple val(id), file(haplotype), file(fai), file(bam)
+        tuple val(id), 
+              file(ctg), 
+              file(fai), 
+              file(bam)
         val outdir
     
     output:
         tuple val(id), path("${id}.scaffold.fa"), emit: scaffolds
-        path "*.{wig,sat,mat}"
+        path "*.{wig,sat,mat,agp}"
+        tuple val(id), path("${id}.agp"), emit: juicebox
         
     script:
         """
@@ -17,9 +21,12 @@ process pin_hic {
 		    -O . \
 		    -q 20 \
 		    -x ${fai} \
-		    -r ${haplotype} \
-		    ${bam}
+		    -r ${ctg} \
+		    ${bam} || exit 1
 
         mv scaffolds_final.fa ${id}.scaffold.fa
+
+        # Convert breaks SAT file into AGP format
+        satool agp scaffolds.bk.sat > ${id}.agp
         """
 }

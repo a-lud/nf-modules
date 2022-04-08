@@ -8,11 +8,15 @@ process tgsgapcloser {
     input:
         tuple val(id), file(fasta), file(hifi)
         val outdir
+        val scaffolds_checked
     
     output:
         tuple val(id), path("${id}.fa"), emit: scaff_detailed
         path "${id}.fa", emit: scaff
         path "*.{log,paf,gap_fill_detail,name_map,original_scaff_infos,updated_scaff_infos}"
+
+    when:
+        scaffolds_checked == true
 
     script:
         """

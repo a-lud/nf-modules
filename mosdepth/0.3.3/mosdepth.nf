@@ -8,10 +8,14 @@ process mosdepth {
     input:
         tuple val(id), file(fasta), file(bam), file(bai)
         val outdir
+        val scaffolds_checked
     
     output:
         path "*.txt"
         path "*.{gz,csi}"
+
+    when:
+        scaffolds_checked == true
 
     script:
         """

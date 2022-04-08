@@ -8,9 +8,13 @@ process quast {
     input:
         file fastas
         val outdir
+        val scaffolds_checked
     
     output:
         path "quast/*"
+    
+    when:
+        scaffolds_checked == true
 
     script:
         """

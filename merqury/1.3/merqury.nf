@@ -8,9 +8,13 @@ process merqury {
     input:
         tuple file(fastas), val(id_hifi), file(hifi)
         val outdir
+        val scaffolds_checked
     
     output:
         path "*.{ploidy,hist,filt,png,qv,stats,bed,wig}"
+    
+    when:
+        scaffolds_checked == true
 
     script:
         """

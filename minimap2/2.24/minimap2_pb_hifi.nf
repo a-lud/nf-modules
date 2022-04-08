@@ -9,9 +9,13 @@ process minimap2_pb_hifi {
     input:
         tuple val(id), file(fasta), val(id_hifi), file(reads)
         val outdir
+        val scaffolds_checked
     
     output:
         tuple val(id), file(fasta), path("${id}-${id_hifi}.bam"), path("${id}-${id_hifi}.bam.bai")
+    
+    when:
+        scaffolds_checked == true
 
     script:
         """
