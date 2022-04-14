@@ -1,7 +1,7 @@
 process assembly_visualiser {
     tag { "3D-DNA visualise ${id}" }
-    publishDir "${outdir}/assembly-scaffold/${scafftool}-${id}/juicebox-files"
-    label "..." //TODO: get a label sorted
+    publishDir "${outdir}/assembly-scaffold/${scafftool}-${id}/juicebox-files", mode: 'copy'
+    label "juicertools"
 
     conda "$projectDir/conf/3ddna.yaml"
 
@@ -19,8 +19,10 @@ process assembly_visualiser {
         export TMPDIR=\$PWD
 
         # Convert AGP file to '.assembly' file used by Juicer/Juicebox etc...
-        agp2assembly.py ${agp} ${id}-${scafftool}.assembly
+        python ${projectDir}/agp2assembly.py ${agp} ${id}-${scafftool}.assembly
         
-        run-assembly-visualizer.sh ${id}-${scafftool}.assembly out.sorted.links.txt # creates a .hic file
+        ${projectDir}/run-assembly-visualizer.sh ${id}-${scafftool}.assembly ${links}
+
+        rm -v temp.${id}-${scafftool}.asm_mnd.txt
         """
 }
