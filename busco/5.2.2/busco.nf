@@ -10,14 +10,10 @@ process busco {
         val buscoDB
         val stage
         val outdir
-        val scaffolds_checked
     
     output:
         path "${stage}-${id}"
         path "${stage}-${id}/short_summary*", emit: summary
-
-    when:
-        scaffolds_checked == true || stage == 'contig'
 
     script:
         """
