@@ -1,7 +1,7 @@
 process hifiasm_hic {
     tag { 'hifiasm ' + id }
     publishDir "${outdir}/assembly-contigs/${id}", mode: 'copy'
-    label "cores_max_mem_time_high"
+    label "hifiasm"
 
     conda "$projectDir/conf/hifiasm.yaml"
 
@@ -12,7 +12,7 @@ process hifiasm_hic {
     
     output:
         path '*'
-        tuple file("${id}-p_ctg.fa"), file("${id}-hap1.fa"), file("${id}-hap2.fa"), emit: hap_fa
+        path '*.fa', emit: contigs
 
     script:
         """
@@ -23,6 +23,7 @@ process hifiasm_hic {
             --h2 ${hic[1]} \
             ${fastq}
 
+        # Convert GFA outputs to FASTA format
         gfatools gfa2fa -l 80 ${id}.hic.hap1.p_ctg.gfa > ${id}-hap1.fa
         gfatools gfa2fa -l 80 ${id}.hic.hap2.p_ctg.gfa > ${id}-hap2.fa
         gfatools gfa2fa -l 80 ${id}.hic.p_ctg.gfa > ${id}-p_ctg.fa

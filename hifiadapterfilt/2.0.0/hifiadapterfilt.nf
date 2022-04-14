@@ -1,7 +1,7 @@
 process hifiadapterfilt {
     tag { "HifiAdapterFilt ${id}" }
-    publishDir "${outdir}/adapter-removed-reads", mode: copy
-    label "..." // TODO: work out resources
+    publishDir "${outdir}/adapter-removed-reads", mode: 'copy'
+    label "hififilter"
 
     conda "$projectDir/conf/hifiadapterfilt.yaml"
 
@@ -10,14 +10,13 @@ process hifiadapterfilt {
         val outdir
     
     output:
-        tuple val(id), path("${id}.filt.fastq.gz"), emit: hifi_clean
+        tuple val(id), path("${id}.filt.fastq.gz"), emit: clean
         path "${id}.{blocklist,stats}"
         
     script:
         """
         hifiadapterfilt.sh \
             -p ${id} \
-            -t ${task.cpus} \
-            -o ${reads}
+            -t ${task.cpus}
         """
 }

@@ -27,6 +27,6 @@ process pin_hic {
         mv scaffolds_final.fa ${id}.scaffold.fa
 
         # Convert breaks SAT file into AGP format
-        satool agp scaffolds.bk.sat > ${id}.agp
+        satool agp scaffs.bk.sat > ${id}.agp
         """
 }

@@ -1,7 +1,7 @@
 process matlock_bam2 {
-    tag { "matlock_bam2 ${id}" }
+    tag { "matlock_bam2 ${bam.simpleName}" }
     publishDir enabled: false
-    label "..." // TODO: work out resources
+    label "bam2mnd"
 
     conda "$projectDir/conf/3ddna.yaml"
 
@@ -10,11 +10,12 @@ process matlock_bam2 {
         val outdir
     
     output:
-        tuple path("${id}.sorted.links.txt")
+        path "sorted.links.txt"
         
     script:
         """
-        matlock bam2 juicer ${bam} ${id}.links.txt
-        sort -T \$PWD --parallel=${task.cpus} -k2,2 -k6,6 ${id}.links.txt > ${id}.sorted.links.txt
+        matlock bam2 juicer ${bam} links.txt || exit 1
+        sort -T \$PWD --parallel=${task.cpus} -k2,2 -k6,6 links.txt > sorted.links.txt || exit 1
+        rm -v links.txt
         """
 }

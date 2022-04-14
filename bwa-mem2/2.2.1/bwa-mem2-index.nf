@@ -1,6 +1,8 @@
 process bwa_mem2_index {
     tag { 'BWA Index ' + id }
     publishDir enabled: false
+
+    label 'bwa_idx'
     
     cpus 1
     time '2h'

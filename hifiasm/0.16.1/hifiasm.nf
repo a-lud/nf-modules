@@ -1,7 +1,7 @@
 process hifiasm {
     tag { 'hifiasm ' + id }
     publishDir "${outdir}/assembly-contigs/${id}", mode: 'copy'
-    label "cores_max_mem_time_high"
+    label "hifiasm"
 
     conda "$projectDir/conf/hifiasm.yaml"
 
@@ -11,7 +11,7 @@ process hifiasm {
     
     output:
         path "*"
-        tuple val (id), file("${id}.fa"), emit: fa
+        tuple val (id), file("${id}.fa"), emit: contigs
 
     script:
         """

@@ -1,7 +1,7 @@
 process seqkit_fq2fa {
     tag { 'seqkit ' + id }
-    publishDir enabled: false
-    label "cores_max_mem_time_low"
+    publishDir "${outdir}/adapter-removed-reads", mode: 'copy'
+    label "seqkit_fq2fa"
 
     conda "$projectDir/conf/seqkit.yaml"
 
