@@ -1,7 +1,7 @@
 process genomescope {
     tag { 'GenomeScope ' + id }
     publishDir "${outdir}/genome-size", mode: 'copy'
-    label "cores_mem_time_low"
+    label "gs2"
 
     conda "$projectDir/conf/genomescope2.yaml"
 
