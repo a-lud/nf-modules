@@ -19,9 +19,9 @@ process assembly_visualiser {
         export TMPDIR=\$PWD
 
         # Convert AGP file to '.assembly' file used by Juicer/Juicebox etc...
-        python ${projectDir}/agp2assembly.py ${agp} ${id}-${scafftool}.assembly
+        python ${projectDir}/bin/agp2assembly.py ${agp} ${id}-${scafftool}.assembly
         
-        ${projectDir}/run-assembly-visualizer.sh ${id}-${scafftool}.assembly ${links}
+        ${projectDir}/bin/run-assembly-visualizer.sh ${id}-${scafftool}.assembly ${links}
 
         rm -v temp.${id}-${scafftool}.asm_mnd.txt
         """
