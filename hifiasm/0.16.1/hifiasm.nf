@@ -1,25 +1,26 @@
 process hifiasm {
-    tag { 'hifiasm ' + id }
-    publishDir "${outdir}/assembly-contigs/${id}", mode: 'copy'
+    tag { prefix }
+    publishDir "${outdir}/assembly-contigs/${prefix}", mode: 'copy'
     label "hifiasm"
 
     conda "$projectDir/conf/hifiasm.yaml"
 
     input:
         tuple val(id), file(fastq)
+        val prefix
         val outdir
     
     output:
         path "*"
-        tuple val (id), file("${id}.fa"), emit: contigs
+        tuple val(prefix), file("${prefix}.fa"), emit: contigs
 
     script:
         """
         hifiasm \
-            -o ${id} \
+            -o ${prefix} \
             -t ${task.cpus}
             ${fastq}
         
-        gfatools gfa2fa -l 80 ${id}.p_ctg.gfa > ${id}.fa
+        gfatools gfa2fa -l 80 ${prefix}.p_ctg.gfa > ${prefix}.fa
         """
 }
