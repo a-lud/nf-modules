@@ -1,21 +1,16 @@
 process mosdepth {
-    tag { 'Mosdepth ' + id }
+    tag { id }
     publishDir "${outdir}/post-assembly-qc/mosdepth", mode: 'copy'
-    label "parallel_low" // TODO: this can be pretty high core, low mem
+    label "mosdepth"
 
     conda "$projectDir/conf/mosdepth.yaml"
 
     input:
-        tuple val(id), file(fasta), file(bam), file(bai)
+        tuple val(id), file(asm), file(bam)
         val outdir
-        val scaffolds_checked
     
     output:
-        path "*.txt"
-        path "*.{gz,csi}"
-
-    when:
-        scaffolds_checked == true
+        path "*.{txt,gz,csi}"
 
     script:
         """
@@ -23,7 +18,7 @@ process mosdepth {
             -t ${task.cpus} \
             --fast-mode \
             --mapq 20 \
-            ${fasta} \
-            ${bam}
+            ${id} \
+            ${bam[0]}
         """
 }

@@ -1,5 +1,5 @@
 process matlock_bam2 {
-    tag { "matlock_bam2 ${bam.simpleName}" }
+    tag { bam.simpleName }
     publishDir enabled: false
     label "bam2mnd"
 
@@ -7,10 +7,9 @@ process matlock_bam2 {
 
     input:
         file bam
-        val outdir
     
     output:
-        path "sorted.links.txt"
+        tuple val("${bam.simpleName}"), path("sorted.links.txt")
         
     script:
         """

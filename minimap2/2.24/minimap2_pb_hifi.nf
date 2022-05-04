@@ -1,35 +1,29 @@
 process minimap2_pb_hifi {
-    tag { 'Minimap2 ' + id }
-    // publishDir "${outdir}/post-assembly-qc/mosdepth", mode: 'copy'
+    tag { id }
     publishDir enabled: false
-    label "cores_max_mem_time_med"
+    label "mm2_pb"
 
     conda "$projectDir/conf/minimap2.yaml"
 
     input:
-        tuple val(id), file(fasta), val(id_hifi), file(reads)
-        val outdir
-        val scaffolds_checked
+        tuple val(id), file(asm), file(reads)
     
     output:
-        tuple val(id), file(fasta), path("${id}-${id_hifi}.bam"), path("${id}-${id_hifi}.bam.bai")
-    
-    when:
-        scaffolds_checked == true
+        tuple val(id), file(asm), path("${id}.{bam,bai}")
 
     script:
         """
         minimap2 \
             -ax map-hifi \
             -t ${task.cpus} \
-            ${fasta} \
+            ${asm} \
             ${reads} | \
         samtools sort \
             -u | \
         samtools view \
             -b \
-            -o ${id}-${id_hifi}.bam
+            -o ${id}.bam
 
-        samtools index -@ ${task.cpus} ${id}-${id_hifi}.bam
+        samtools index -@ ${task.cpus} ${id}.bam
         """
 }
