@@ -1,5 +1,5 @@
 process hifiadapterfilt {
-    tag { "HifiAdapterFilt ${id}" }
+    tag { id }
     publishDir "${outdir}/adapter-removed-reads", mode: 'copy'
     label "hififilter"
 

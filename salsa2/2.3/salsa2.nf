@@ -1,7 +1,7 @@
 process salsa2 {
-    tag { "SALSA2 ${id}" }
+    tag { id }
     publishDir "${outdir}/assembly-scaffold/salsa2-${id}", mode: 'copy'
-    label "scaffolding"
+    label "salsa2"
 
     conda "$projectDir/conf/salsa2.yaml"
 

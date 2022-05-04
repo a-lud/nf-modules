@@ -1,5 +1,5 @@
 process seqkit_fq2fa {
-    tag { 'seqkit ' + id }
+    tag { id }
     publishDir "${outdir}/adapter-removed-reads", mode: 'copy'
     label "seqkit_fq2fa"
 

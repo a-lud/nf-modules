@@ -1,7 +1,7 @@
 process pin_hic {
-    tag { 'pin_hic_ ' + id }
+    tag { id }
     publishDir "${outdir}/assembly-scaffold/pin_hic-${id}", mode: 'copy', pattern: "*.{fa,wig,sat,mat,agp}"
-    label "scaffolding"
+    label "pinhic"
 
     input:
         tuple val(id), 
