@@ -1,17 +1,18 @@
 process kmc {
-    tag { 'KMC ' + id }
+    tag { id }
     // publishDir "${outdir}/genome-size/kmc-${id}", mode: 'copy'
     publishDir enabled: false
-    label "cores_mem_high_time_med"
+    label "kmc"
 
     conda "$projectDir/conf/kmc.yaml"
     
     input:
         tuple val(id), file(fastq)
+        val prefix
         val outdir
     
     output:
-        tuple val(id), path("${id}.kmc.histo"), path("${id}.{kmc_pre,kmc_suf}"), emit: histo
+        tuple val(prefix), path("${prefix}.kmc.histo"), path("${prefix}.{kmc_pre,kmc_suf}"), emit: histo
 
     script:
         """
@@ -21,12 +22,12 @@ process kmc {
             -m64 \
             -ci2 \
             -cs100000 \
-            ${fastq} ${id} .
+            ${fastq} ${prefix} .
         
         kmc_tools transform \
-            ${id} \
+            ${prefix} \
             histogram \
-            ${id}.kmc.histo \
+            ${prefix}.kmc.histo \
             -ci2 \
             -cx100000
         """
