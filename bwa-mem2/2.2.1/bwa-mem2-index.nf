@@ -1,17 +1,13 @@
 process bwa_mem2_index {
-    tag { 'BWA Index ' + id }
+    tag { id }
     publishDir enabled: false
 
     label 'bwa_idx'
-    
-    cpus 1
-    time '2h'
-    memory '60 GB'
 
     conda "$projectDir/conf/bwa2.yaml"
 
     input:
-        tuple val(id), file(haplotype)
+        tuple val(id), file(asm)
         val outdir
     
     output:
@@ -19,7 +15,7 @@ process bwa_mem2_index {
         tuple val(id), path("*.fai"), emit: fai
     script:
         """
-        samtools faidx ${haplotype}
-        bwa-mem2 index ${haplotype}
+        samtools faidx ${asm}
+        bwa-mem2 index ${asm}
         """
 }
