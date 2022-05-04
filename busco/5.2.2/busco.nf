@@ -1,5 +1,5 @@
 process busco {
-    tag { "BUSCO ${id} ${stage}" }
+    tag { "${id}_${stage}" }
     publishDir "${outdir}/post-assembly-qc/busco", mode: 'copy'
     label "busco"
 
