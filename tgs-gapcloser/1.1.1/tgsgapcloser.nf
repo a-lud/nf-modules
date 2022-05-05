@@ -45,6 +45,9 @@ process tgsgapcloser {
         # Generate output sequences
         \${TGSSEQGEN} \
             --prefix ${id} 1>${id}.i2s.log 2>&1 || exit 1
+
+        # Rename the output file
+        mv ${id}.scaff_seqs ${id}.fa
         """
 }
 

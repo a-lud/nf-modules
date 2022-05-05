@@ -16,7 +16,8 @@ process juicebox_assembly_converter {
         val outdir
     
     output:
-        tuple val("${prefix}-${asm_type}"), path("${prefix}-${asm_type}.fa"), emit: manual
+        tuple val("${prefix}-${asm_type}"), 
+              path("${prefix}-${asm_type}-${scafftool}.fa"), emit: manual
         path "*"
         
     script:
@@ -38,7 +39,7 @@ process juicebox_assembly_converter {
         seqkit seq --min-len ${len} -w 100 ${id}.sort.fasta > ${id}.length.fasta
 
         # Rename to 'scaffold_{nr}'
-        seqkit replace -p '.+' -r 'scaffold_{nr}' ${id}.length.fasta > ${prefix}-${asm_type}.fa
+        seqkit replace -p '.+' -r 'scaffold_{nr}' ${id}.length.fasta > ${prefix}-${asm_type}-${scafftool}.fa
 
         # Remove intermediate files
         rm -v ${id}.fasta ${id}.sort.fasta ${id}.length.fasta
