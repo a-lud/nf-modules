@@ -1,7 +1,6 @@
 process busco_plot {
     tag { 'BUSCO plot' }
-    publishDir "${outdir}/post-assembly-qc/busco", mode: 'copy'
-    // label "cores_mem_time_low"
+    publishDir "${outdir}/post-assembly-qc/busco", mode: 'move'
 
     conda "$projectDir/conf/R.yaml"
 
@@ -14,6 +13,6 @@ process busco_plot {
 
     script:
         """
-        busco-plot-updated.R
+        Rscript --vanilla ${projectDir}/bin/busco-plot-updated.R
         """
 }
