@@ -1,12 +1,14 @@
+// Single assembly
 process merqury {
-    tag { 'K-mer' }
+    tag { asm.baseName }
     publishDir "${outdir}/post-assembly-qc/merqury", mode: 'copy'
     label 'merqury'
 
     conda "$projectDir/conf/merqury.yaml"
 
     input:
-        tuple file(asm), file(hifi)
+        file asm
+        file merly_db
         val outdir
     
     output:
@@ -16,13 +18,32 @@ process merqury {
         """
         cp ${projectDir}/bin/spectra-cn.sh \${MERQURY}/eval
 
-        meryl count \
-            k=21 \
-            threads=${task.cpus} \
-            memory=50 \
-            ${hifi} \
-            output reads.meryl
+        # Merqury on single assembly compared to hifi reads
+        merqury.sh ${merly_db} ${asm} ${asm.baseName}-to-hifi
+        """
+}
 
-        merqury.sh reads.meryl ${asm} asm-to-hifi
+// Two haplotypes
+process merqury_haplotypes {
+    tag { 'Haplotypes' }
+    publishDir "${outdir}/post-assembly-qc/merqury", mode: 'copy'
+    label 'merqury'
+
+    conda "$projectDir/conf/merqury.yaml"
+
+    input:
+        file haps
+        file merly_db
+        val outdir
+    
+    output:
+        path "*.{ploidy,hist,filt,png,qv,stats,bed,wig}"
+
+    script:
+        """
+        cp ${projectDir}/bin/spectra-cn.sh \${MERQURY}/eval
+
+        # Merqury on haplotypes
+        merqury.sh ${merly_db} ${haps} haplotypes-to-hifi
         """
 }
