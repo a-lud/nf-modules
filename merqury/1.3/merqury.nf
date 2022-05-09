@@ -1,7 +1,7 @@
 // Single assembly
 process merqury {
     tag { asm.baseName }
-    publishDir "${outdir}/post-assembly-qc/merqury", mode: 'copy'
+    publishDir "${outdir}/post-assembly-qc/merqury", mode: 'move'
     label 'merqury'
 
     conda "$projectDir/conf/merqury.yaml"
