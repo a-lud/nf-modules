@@ -1,5 +1,5 @@
 process genomescope {
-    tag { 'GenomeScope ' + id }
+    tag { id }
     publishDir "${outdir}/genome-size", mode: 'copy'
     label "gs2"
 

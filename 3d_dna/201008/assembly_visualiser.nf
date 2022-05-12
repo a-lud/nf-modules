@@ -1,5 +1,5 @@
 process assembly_visualiser {
-    tag { "3D-DNA visualise ${id}" }
+    tag { id }
     publishDir "${outdir}/assembly-scaffold/${scafftool}-${id}/juicebox-files", mode: 'copy'
     label "juicertools"
 

@@ -1,5 +1,5 @@
 process bwa_mem2_mem {
-    tag { "bwa_mem2_mem ${id_haplotype} ${id_hic}" }
+    tag { "${id_haplotype} ${id_hic}" }
     publishDir enabled: false // Don't need big bam file saved
     label "cores_max_mem_time_med"
 
