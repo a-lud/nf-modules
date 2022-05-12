@@ -11,8 +11,7 @@ process bwa_mem2_index {
         val outdir
     
     output:
-        tuple val(id), file("*.{0123,ann,amb,64,pac}"), emit: bwa_idx
-        tuple val(id), path("*.fai"), emit: fai
+        tuple val(id), file(asm), file('*.fai'), file("*.{0123,ann,amb,64,pac}")
     script:
         """
         samtools faidx ${asm}
