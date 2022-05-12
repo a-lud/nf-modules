@@ -9,7 +9,8 @@ process minimap2_pb_hifi {
         tuple val(id), file(asm), file(reads)
     
     output:
-        tuple val(id), file(asm), path("${id}.{bam,bam.bai}")
+        tuple val(id), file(asm), path("${id}.{bam,bam.bai}"), emit: mosdepth
+        file "${id}.{bam,bam.bai}", emit: flagstat
 
     script:
         """
