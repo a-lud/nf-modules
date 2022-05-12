@@ -13,8 +13,8 @@ process salsa2 {
         val outdir
     
     output:
-        tuple val(id), file('scaffolds_FINAL.fasta'), emit: scaffolds
-        tuple val(id), path("scaffolds_FINAL.agp"), emit: juicebox
+        tuple val(id), file("${id}.scaffold.fa"), emit: scaffolds
+        tuple val(id), path("${id}.agp"), emit: juicebox
         
     script:
         """
@@ -29,5 +29,9 @@ process salsa2 {
 
         rm ${bam.baseName}.bed
         cp salsa-out/scaffolds_FINAL* \$PWD
+
+        # Rename files
+        mv scaffolds_FINAL.fasta ${id}.scaffold.fa
+        mv scaffolds_FINAL.agp ${id}.agp
         """
 }
