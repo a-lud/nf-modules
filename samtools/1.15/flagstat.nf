@@ -1,5 +1,5 @@
 process flagstat {
-    tag { id }
+    tag { bam[0].simpleName }
     publishDir "${outdir}/post-assembly-qc/alignment-statistics", mode: 'move'
     label "flagstat"
 
@@ -10,13 +10,13 @@ process flagstat {
         val outdir
     
     output:
-        path "${id}.tsv"
+        path "${bam[0].simpleName}.tsv"
 
     script:
         """
         samtools flagstat \
             -@ ${task.cpus} \
             -O tsv \
-            ${bam[0]} > ${id}.tsv
+            ${bam[0]} > ${bam[0].simpleName}.tsv
          """
 }
