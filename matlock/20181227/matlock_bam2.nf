@@ -6,15 +6,15 @@ process matlock_bam2 {
     conda "$projectDir/conf/3ddna.yaml"
 
     input:
-        file bam
+        tuple val(id), file(bam)
     
     output:
-        tuple val("${bam.simpleName}"), path("sorted.links.txt")
+        tuple val(id), path("${id}.sorted.links.txt")
         
     script:
         """
-        matlock bam2 juicer ${bam} links.txt || exit 1
-        sort -T \$PWD --parallel=${task.cpus} -k2,2 -k6,6 links.txt > sorted.links.txt || exit 1
-        rm -v links.txt
+        matlock bam2 juicer ${bam} ${id}.links.txt || exit 1
+        sort -T \$PWD --parallel=${task.cpus} -k2,2 -k6,6 ${id}.links.txt > ${id}.sorted.links.txt || exit 1
+        rm -v ${id}.links.txt
         """
 }

@@ -12,7 +12,7 @@ process arima_dedup_sort {
 
     output:
         tuple val(id), file(fai), file("${id}.hic.bam"), emit: bam
-        path "${id}.hic.bam", emit: hic_to_ctg_bam
+        tuple val(id), file("${id}.hic.bam"), emit: hic_to_ctg_bam
         
     script:
         """
