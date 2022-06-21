@@ -1,35 +1,27 @@
 process codeml {
     tag { id }
-
     publishDir "${outdir}/codeml/${id}", mode: 'copy'
-    conda "$projectDir/conf/ete.yaml"
-    label 'resource_low'
+    conda "$projectDir/conf/ete3.yaml"
+    label 'ete'
 
     input:
         tuple val(id), file(alignment), file(tree)
         val models
-        val tests
-        val codemlOptional
         val outdir
 
     output:
-        file "*"
-        file "results_codeml.txt"
+        file "*" // Should be output directories
+        file "results_codeml.txt" // Should have a summary of the run
 
     script:
-        
-        // Defining arguments
-        def tests = tests ? '--tests ' + tests : ''
-        def opt_args = codemlOptional ?: ''
-
         """
         ete3 evol \
-            --cpu ${task.cpus} \
-            -t ${tree} \
             --alg ${alignment} \
-            -o \${PWD} \
+            -t ${tree} \
             --models ${models} \
-            ${tests} ${opt_args}
+            --cpu ${task.cpus} \
+            -o \${PWD} \
+            -v 1
         
         cp .command.out results_codeml.txt
         """        
