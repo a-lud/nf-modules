@@ -1,6 +1,6 @@
 process busco_plot {
     tag { 'BUSCO plot' }
-    publishDir "${outdir}/post-assembly-qc/busco", mode: 'move'
+    publishDir "${outdir}/qc/busco", mode: 'move'
 
     conda "$projectDir/conf/R.yaml"
 

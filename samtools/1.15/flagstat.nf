@@ -1,6 +1,6 @@
 process flagstat {
     tag { bam[0].simpleName }
-    publishDir "${outdir}/post-assembly-qc/alignment-statistics", mode: 'move'
+    publishDir "${outdir}/qc/alignment-statistics", mode: 'copy'
     label "flagstat"
 
     conda "$projectDir/conf/samtools.yaml"
@@ -10,13 +10,13 @@ process flagstat {
         val outdir
     
     output:
-        path "${bam[0].simpleName}.tsv"
+        path "${bam[0].simpleName}.flagstat"
+        path "${bam[0].simpleName}.flagstat", emit: multiqc
 
     script:
         """
         samtools flagstat \
             -@ ${task.cpus} \
-            -O tsv \
-            ${bam[0]} > ${bam[0].simpleName}.tsv
+            ${bam[0]} > ${bam[0].simpleName}.flagstat
          """
 }

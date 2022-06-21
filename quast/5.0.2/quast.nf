@@ -1,6 +1,6 @@
 process quast {
     tag { 'QUAST' }
-    publishDir "${outdir}/post-assembly-qc", mode: 'copy'
+    publishDir "${outdir}/qc", mode: 'copy'
     label "quast"
 
     conda "$projectDir/conf/quast.yaml"

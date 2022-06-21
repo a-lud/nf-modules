@@ -1,13 +1,12 @@
 process kraken2 {
     tag { id }
-    publishDir "${outdir}/${outprefix}/kraken2", mode: 'copy'
+    publishDir "${outdir}/kraken2", mode: 'copy'
     label "kraken2"
 
     conda "$projectDir/conf/kraken2.yaml"
 
     input:
         tuple val(id), file(reads)
-        val outprefix
         val krakendb
         val outdir
     
@@ -28,6 +27,8 @@ process kraken2 {
             --report ${id}.report \
             --use-names \
             ${reads[0]} ${reads[1]}
+
+        rm .command.log .command.out
 
         pigz -p ${task.cpus} -9 *.fastq
         """

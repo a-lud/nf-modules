@@ -1,29 +1,37 @@
 process bwa_mem2_mem {
-    tag { "${id_haplotype} ${id_hic}" }
+    tag { id }
     publishDir enabled: false // Don't need big bam file saved
-    label "cores_max_mem_time_med"
+    label "bwa"
 
     conda "$projectDir/conf/bwa2.yaml"
 
     input:
-        tuple val(id_haplotype), 
-              file(haplotype), 
-              file(fai), 
-              file(bwa_idx),
-              val(id_hic),
-              file(reads)
-        val outdir
+        tuple val(id), 
+              file(reads), 
+              file(asm)
+        val platform
+        val mapq
     
     output:
-        tuple val(id_haplotype), file(haplotype), file(fai), file("*.bam"), emit: bam
+        tuple val(id), path("${id}.raw.bam")
         
     script:
         """
+        # Index genome
+        bwa-mem2 index ${asm}
+
+        # Align reads
         bwa-mem2 mem \
-		    -SP \
-		    -B 10 \
 		    -t ${task.cpus} \
-		    ${haplotype} \
-		    ${reads} | samtools view -b - > ${id_haplotype}-${id_hic}-hic.bam
+            -R \"@RG\\tID:${id}\\tSM:${id}\\tPL:${platform}\\tLB:LIB.${id}\" \
+		    ${asm} \
+		    ${reads} |
+        samtools sort -u |
+        samtools view \
+            --bam \
+            --require-flags 3 \
+            --exclude-flags 4 \
+            --min-MQ ${mapq} \
+            -o ${id}.raw.bam
         """
 }

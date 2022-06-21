@@ -1,13 +1,12 @@
 process fastqc {
     tag { id }
-    publishDir "${outdir}/${outprefix}/fastqc", mode: 'copy'
+    publishDir "${outdir}/fastqc", mode: 'copy'
     label "fastqc"
 
     conda "$projectDir/conf/fastqc.yaml"
 
     input:
         tuple val(id), file(reads)
-        val outprefix
         val outdir
     
     output:

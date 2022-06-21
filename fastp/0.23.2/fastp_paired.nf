@@ -1,13 +1,12 @@
 process fastp_paired {
     tag { id }
-    publishDir "${outdir}/${outprefix}/fastp", mode: 'copy'
+    publishDir "${outdir}/fastp", mode: 'copy'
     label "fastp"
 
     conda "$projectDir/conf/fastp.yaml"
 
     input:
         tuple val(id), file(reads)
-        val outprefix
         val platform
         val bqp
         val nbl

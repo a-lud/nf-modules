@@ -1,14 +1,12 @@
 process multiqc {
     tag { 'Report' }
-    publishDir "${outdir}/${outprefix}/multiqc", mode: 'move'
+    publishDir "${outdir}/multiqc", mode: 'move'
 
     conda "$projectDir/conf/multiqc.yaml"
 
     input:
-        file fqc
-        file kr2
-        file fp
-        val outprefix
+        file files
+        val intro
         val outdir
     
     output:
@@ -16,7 +14,7 @@ process multiqc {
 
     script:
         """
-        multiqc --config ${projectDir}/conf/multiqc-config.yaml .
+        multiqc --config ${projectDir}/conf/multiqc-config.yaml --cl_config '${intro}' .
         """
     
     stub:

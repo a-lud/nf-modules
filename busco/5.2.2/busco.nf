@@ -1,6 +1,6 @@
 process busco {
     tag { "${id}_${stage}" }
-    publishDir "${outdir}/post-assembly-qc/busco", mode: 'copy'
+    publishDir "${outdir}/qc/busco", mode: 'copy'
     label "busco"
 
     conda "$projectDir/conf/busco.yaml"
