@@ -1,6 +1,7 @@
 process bcftools_consensus {
     tag { id }
     publishDir "${outdir}/consensus", mode: 'move'
+    publishDir "${outdir}/vcf-filtered", mode: 'move', pattern: "*filtered.vcf.gz"
     label "bcftools"
 
     conda "$projectDir/conf/bcftools.yaml"
