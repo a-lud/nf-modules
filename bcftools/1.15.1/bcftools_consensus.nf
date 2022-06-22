@@ -15,8 +15,7 @@ process bcftools_consensus {
         val outdir
         
     output:
-        path "${id}-consensus.fa"
-        path "${id}-consensus.stats"
+        tuple path("${id}-consensus.fa"), path("${id}-consensus.stats")
         
     script:
         """

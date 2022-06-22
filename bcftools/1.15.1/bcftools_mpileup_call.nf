@@ -1,6 +1,6 @@
 process bcftools_mpileup_call {
     tag { id }
-    publishDir "${outdir}/vcf", mode: 'copy'
+    publishDir "${outdir}/vcf", mode: 'copy', pattern: '*.vcf.gz'
     label "bcftools"
 
     conda "$projectDir/conf/bcftools.yaml"

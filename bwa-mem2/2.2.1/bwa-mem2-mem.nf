@@ -7,8 +7,10 @@ process bwa_mem2_mem {
 
     input:
         tuple val(id), 
-              file(reads), 
-              file(asm)
+              file(reads),
+              file(asm),
+              file(fai),
+              file(idx)
         val platform
         val mapq
     
@@ -17,9 +19,6 @@ process bwa_mem2_mem {
         
     script:
         """
-        # Index genome
-        bwa-mem2 index ${asm}
-
         # Align reads
         bwa-mem2 mem \
 		    -t ${task.cpus} \
