@@ -1,6 +1,6 @@
 process bcftools_consensus {
     tag { id }
-    publishDir "${outdir}/consensus", mode: 'move'
+    publishDir "${outdir}/consensus", mode: 'move', pattern: "*.{fa,stats}"
     publishDir "${outdir}/vcf-filtered", mode: 'move', pattern: "*filtered.vcf.gz"
     label "bcftools"
 
@@ -16,7 +16,9 @@ process bcftools_consensus {
         val outdir
         
     output:
-        tuple path("${id}-consensus.fa"), path("${id}-consensus.stats")
+        path "${id}-consensus.fa"
+        path "${id}-consensus.stats"
+        path "${id}.filtered.vcf.gz"
         
     script:
         """
