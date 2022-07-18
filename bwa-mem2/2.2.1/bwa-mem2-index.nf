@@ -8,10 +8,12 @@ process bwa_mem2_index {
 
     input:
         tuple val(id), file(asm)
-        val outdir
     
     output:
-        tuple val(id), file(asm), file('*.fai'), file("*.{0123,ann,amb,64,pac}")
+        tuple val(id), 
+              file(asm), 
+              file('*.fai'), 
+              file("*.{0123,ann,amb,64,pac}")
     script:
         """
         samtools faidx ${asm}

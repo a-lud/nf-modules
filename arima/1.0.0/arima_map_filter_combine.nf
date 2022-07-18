@@ -14,7 +14,9 @@ process arima_map_filter_combine {
               file(reads)
 
     output:
-        tuple val(id_asm), file(fai), file("${id_asm}-${id_hic}.combined.bam"), emit: bam
+        tuple val(id_asm), 
+              file(fai), 
+              file("${id_asm}-${id_hic}.combined.bam"), emit: bam
         
     script:
         def cpus = task.cpus/4 // Running background processes with shared resources

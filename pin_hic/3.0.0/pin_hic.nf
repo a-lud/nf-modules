@@ -1,6 +1,6 @@
 process pin_hic {
     tag { id }
-    publishDir "${outdir}/assembly-scaffold/pin_hic-${id}", mode: 'copy', pattern: "*.{fa,wig,sat,mat,agp}"
+    publishDir "${outdir}/pin_hic-${id}", mode: 'copy', pattern: "*.{fa,wig,sat,mat,agp}"
     label "pinhic"
 
     input:
@@ -12,8 +12,8 @@ process pin_hic {
     
     output:
         tuple val(id), path("${id}.scaffold.fa"), emit: scaffolds
-        path "*.{wig,sat,mat,agp}"
         tuple val(id), path("${id}.agp"), emit: juicebox
+        path "*.{wig,sat,mat,agp}"
         
     script:
         """

@@ -1,17 +1,18 @@
 process genomescope {
     tag { id }
-    publishDir "${outdir}/genome-size", mode: 'copy'
+    publishDir "${outdir}", mode: 'move'
     label "gs2"
 
     conda "$projectDir/conf/genomescope2.yaml"
 
     input:
-        tuple val(id), file(histo), file(db)
+        tuple val(id), 
+              file(histo),
+              file(db)
         val outdir
     
     output:
         path "genomescope-${id}"
-
 
     script:
         """

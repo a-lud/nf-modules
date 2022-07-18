@@ -1,6 +1,6 @@
 process seqkit_fq2fa {
     tag { id }
-    publishDir "${outdir}/adapter-removed-reads", mode: 'move'
+    publishDir "${outdir}", mode: 'move'
     label "seqkit_fq2fa"
 
     conda "$projectDir/conf/seqkit.yaml"

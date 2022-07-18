@@ -1,6 +1,6 @@
 process hifiasm {
     tag { prefix }
-    publishDir "${outdir}/assembly-contigs/${prefix}", mode: 'copy'
+    publishDir "${outdir}", mode: 'copy'
     label "hifiasm"
 
     conda "$projectDir/conf/hifiasm.yaml"

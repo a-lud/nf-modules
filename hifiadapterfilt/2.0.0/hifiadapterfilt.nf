@@ -1,6 +1,6 @@
 process hifiadapterfilt {
     tag { id }
-    publishDir "${outdir}/adapter-removed-reads", mode: 'copy'
+    publishDir "${outdir}", mode: 'copy'
     label "hififilter"
 
     conda "$projectDir/conf/hifiadapterfilt.yaml"

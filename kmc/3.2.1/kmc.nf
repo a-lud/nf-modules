@@ -1,6 +1,5 @@
 process kmc {
     tag { id }
-    // publishDir "${outdir}/genome-size/kmc-${id}", mode: 'copy'
     publishDir enabled: false
     label "kmc"
 
@@ -9,10 +8,11 @@ process kmc {
     input:
         tuple val(id), file(fastq)
         val prefix
-        val outdir
     
     output:
-        tuple val(prefix), path("${prefix}.kmc.histo"), path("${prefix}.{kmc_pre,kmc_suf}"), emit: histo
+        tuple val(prefix), 
+              path("${prefix}.kmc.histo"),
+              path("${prefix}.{kmc_pre,kmc_suf}"), emit: histo
 
     script:
         """

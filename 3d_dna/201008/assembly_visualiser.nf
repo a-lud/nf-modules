@@ -1,6 +1,6 @@
 process assembly_visualiser {
     tag { id }
-    publishDir "${outdir}/assembly-scaffold/${scafftool}-${id}/juicebox-files", mode: 'copy'
+    publishDir "${outdir}/${scafftool}-${id}/juicebox-files", mode: 'copy'
     label "juicertools"
 
     conda "$projectDir/conf/3ddna.yaml"

@@ -1,7 +1,7 @@
 process hifiasm_hic {
     tag { prefix }
-    publishDir "${outdir}/assembly-contigs/${prefix}", mode: 'copy', pattern: "*.fa"
-    publishDir "${outdir}/assembly-contigs/${prefix}", mode: 'move', pattern: "*.{gfa,bed,bin}"
+    publishDir "${outdir}", mode: 'copy', pattern: "*.fa"
+    publishDir "${outdir}", mode: 'move', pattern: "*.{gfa,bed,bin}"
     label "hifiasm"
 
     conda "$projectDir/conf/hifiasm.yaml"
