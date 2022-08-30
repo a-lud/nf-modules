@@ -1,6 +1,6 @@
 process flagstat {
     tag { bam[0].simpleName }
-    publishDir "${outdir}/qc/alignment-statistics", mode: 'copy'
+    publishDir "${outdir}", mode: 'copy'
     label "flagstat"
 
     conda "$projectDir/conf/samtools.yaml"

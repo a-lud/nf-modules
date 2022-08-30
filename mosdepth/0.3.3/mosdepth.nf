@@ -1,6 +1,6 @@
 process mosdepth {
     tag { id }
-    publishDir "${outdir}/qc/mosdepth", mode: 'copy'
+    publishDir "${outdir}", mode: 'copy'
     label "mosdepth"
 
     conda "$projectDir/conf/mosdepth.yaml"
