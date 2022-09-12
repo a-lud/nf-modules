@@ -1,7 +1,7 @@
 process orthofinder {
     tag { prog }
     publishDir "${outdir}", mode: 'copy', pattern: "orthofinder"
-    publishDir "${outdir}/logs/orthofinder", mode: 'copy', pattern: "orthofinder_${prog}.log"
+    publishDir "${outdir}/logs", mode: 'copy', pattern: "orthofinder_${prog}.log"
     label "ortho"
 
     conda "$projectDir/conf/orthofinder.yaml"
@@ -9,6 +9,7 @@ process orthofinder {
     input:
         file proteins
         val prog
+        val stop_early
         val outdir
     
     output:
@@ -17,15 +18,13 @@ process orthofinder {
         path "orthofinder-${prog}.log"
 
     script:
+        def stop_point = stop_early ? '-oa' : ''
         """
         mkdir -p msa-single_copy_orthologs
         mkdir -p prots
 
         # Move proteins to directory
         mv *.faa prots
-
-        # Create single copy orthologs txt file
-        touch sco.txt
 
         orthofinder \
             -f ./prots \
@@ -34,8 +33,8 @@ process orthofinder {
             -n ${prog} \
             -M 'msa' \
             -z \
-            -oa \
-            -o \$PWD/orthofinder
+            -o \$PWD/orthofinder \
+            ${stop_point}
 
         # Copy single copy ortholog MSA files only
         for SCO in orthofinder/Results_${prog}/Single_Copy_Orthologue_Sequences/*.fa; do

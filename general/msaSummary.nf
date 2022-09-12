@@ -1,7 +1,7 @@
 process msaSummary {
     stageInMode 'copy'
     publishDir "${outdir}/msa-summary", mode: 'copy', pattern: "${stage}-trimming"
-    publishDir "${outdir}/logs/msa-summary", mode: 'copy', pattern: "msaSummary-${stage}.log"
+    publishDir "${outdir}/logs", mode: 'copy', pattern: "msaSummary-${stage}.log"
 
     input:
         file codon_dir

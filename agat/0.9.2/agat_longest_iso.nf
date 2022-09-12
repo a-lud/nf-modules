@@ -1,7 +1,7 @@
 process agat_longest_iso {
     tag { id }
-    publishDir "${outdir}/agat_longest-isoform", mode: 'copy', pattern: "*-longest.gff3"
-    publishDir "${outdir}/logs/agat_longest-isoform", mode: 'copy', pattern: "*-${id}.log"
+    publishDir "${outdir}/agat/longest-isoforms", mode: 'copy', pattern: "*-longest.gff3"
+    publishDir "${outdir}/logs", mode: 'copy', pattern: "*-${id}.log"
     label "agat"
 
     conda "$projectDir/conf/agat.yaml"

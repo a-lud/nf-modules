@@ -1,8 +1,8 @@
 process agat_extract_seq {
     tag { id }
-    publishDir "${outdir}/extract-cds/agat_protein", mode: 'copy', pattern: "${id}.faa"
-    publishDir "${outdir}/extract-cds/agat_nucleotide", mode: 'copy', pattern: "${id}.cds"
-    publishDir "${outdir}/logs/agat_extract-seq", mode: 'copy', pattern: "*-${id}.log"
+    publishDir "${outdir}/agat/cds_proteins", mode: 'copy', pattern: "${id}.faa"
+    publishDir "${outdir}/agat/cds_nucleotide", mode: 'copy', pattern: "${id}.cds"
+    publishDir "${outdir}/logs", mode: 'copy', pattern: "*-${id}.log"
     label "agat"
 
     conda "$projectDir/conf/agat.yaml"

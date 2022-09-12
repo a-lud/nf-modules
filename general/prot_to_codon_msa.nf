@@ -1,7 +1,7 @@
 process prot_to_codon_msa {
     publishDir "${outdir}", mode: 'copy', pattern: "msa-to-codon"
-    publishDir "${outdir}/logs/msa-to-codon", mode: 'copy', pattern: "msa_to_codon.log"
-    publishDir "${outdir}/logs/msa-to-codon", mode: 'copy', pattern: "**/pal2nal.log"
+    publishDir "${outdir}/logs", mode: 'copy', pattern: "msa_to_codon.log"
+    publishDir "${outdir}/logs", mode: 'copy', pattern: "**/pal2nal.log"
     label "msa2codon"
 
     conda "$projectDir/conf/msa2codon.yaml"

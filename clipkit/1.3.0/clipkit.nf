@@ -1,6 +1,6 @@
 process clipkit {
-    publishDir "${outdir}", mode: 'move', pattern: "clipkit"
-    publishDir "${outdir}/logs/clipkit", mode: 'copy', pattern: "*.log"
+    publishDir "${outdir}", mode: 'copy', pattern: "clipkit"
+    publishDir "${outdir}/logs", mode: 'copy', pattern: "*.log"
 
     label 'clipkit'
 
