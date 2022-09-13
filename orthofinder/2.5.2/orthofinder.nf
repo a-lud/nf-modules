@@ -10,6 +10,7 @@ process orthofinder {
         file proteins
         val prog
         val stop_early
+        val trim_msa
         val outdir
     
     output:
@@ -18,7 +19,6 @@ process orthofinder {
         path "orthofinder-${prog}.log"
 
     script:
-        def stop_point = stop_early ? '-oa' : ''
         """
         mkdir -p msa-single_copy_orthologs
         mkdir -p prots
@@ -32,9 +32,9 @@ process orthofinder {
             -S ${prog} \
             -n ${prog} \
             -M 'msa' \
-            -z \
             -o \$PWD/orthofinder \
-            ${stop_point}
+            ${trim_msa} \
+            ${stop_early}
 
         # Copy single copy ortholog MSA files only
         for SCO in orthofinder/Results_${prog}/Single_Copy_Orthologue_Sequences/*.fa; do
