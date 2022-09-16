@@ -1,6 +1,9 @@
 process codeml {
     tag { id }
-    publishDir "${outdir}/codeml/${id}", mode: 'copy'
+
+    publishDir "${outdir}", mode: 'copy', pattern: "ete-out/${id}"
+    publishDir "${outdir}/logs", mode: 'copy', pattern: "codeml-${id}.log"
+    
     conda "$projectDir/conf/ete3.yaml"
     label 'ete'
 
@@ -10,8 +13,8 @@ process codeml {
         val outdir
 
     output:
-        file "*" // Should be output directories
-        file "results_codeml.txt" // Should have a summary of the run
+        path "ete-out/${id}", emit: cml
+        file "codeml-${id}.log"
 
     script:
         """
@@ -20,9 +23,9 @@ process codeml {
             -t ${tree} \
             --models ${models} \
             --cpu ${task.cpus} \
-            -o \${PWD} \
+            -o ete-out/${id} \
             -v 1
         
-        cp .command.out results_codeml.txt
+        cp .command.log codeml-${id}.log
         """        
 }
