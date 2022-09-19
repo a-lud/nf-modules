@@ -26,6 +26,9 @@ process codeml {
             -o ete-out/${id} \
             -v 1
         
+        # remove files from working directory to reduce system clutter
+        rm 2NG.dN 2NG.dS 2NG.t 4fold.nuc algn lnf rst1 rub tmp.ctl tree
+        
         cp .command.log codeml-${id}.log
         """        
 }
