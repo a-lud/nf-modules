@@ -1,6 +1,6 @@
 process multiqc {
     tag { 'Report' }
-    publishDir "${outdir}/multiqc", mode: 'move'
+    publishDir "${outdir}", mode: 'move'
 
     conda "$projectDir/conf/multiqc.yaml"
 
