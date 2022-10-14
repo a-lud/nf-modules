@@ -1,7 +1,7 @@
 process coverage {
     tag { id }
     publishDir "${outdir}", mode: 'copy', pattern: "${id}-coverage.csv"
-    label "flagstat"
+    label "bcftools_st"
 
     conda "$projectDir/conf/samtools.yaml"
 
