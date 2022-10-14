@@ -9,6 +9,7 @@ process orthofinder {
     input:
         file proteins
         val prog
+        val tree
         val stop_early
         val trim_msa
         val outdir
@@ -33,6 +34,7 @@ process orthofinder {
             -n ${prog} \
             -M 'msa' \
             -o \$PWD/orthofinder \
+            ${tree} \
             ${trim_msa} \
             ${stop_early}
 
