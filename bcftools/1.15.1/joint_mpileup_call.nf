@@ -9,6 +9,7 @@ process joint_mpileup_call {
         tuple val(id), file(bams), file(bai),
               file(bamlist), file(asm),
               val(chr), file(regions)
+        val vcftype
         val mapq
         val baseq
         val ploidy
@@ -23,6 +24,8 @@ process joint_mpileup_call {
         path "*vcf.stats"
         
     script:
+
+        def vcftype = vcftype == 'variant' ? "--variants-only" : ""
         def regopt = regions.baseName != 'no_regions' ? "--regions-file regions-subset.bed" : ""
         
         """
@@ -45,6 +48,7 @@ process joint_mpileup_call {
             ${mpileupopt} |
         bcftools call \
             -m \
+            ${vcftype} \
             --ploidy ${ploidy} \
             -Oz \
             -a FORMAT/GQ \

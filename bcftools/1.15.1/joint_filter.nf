@@ -1,8 +1,6 @@
 process joint_filter {
     tag { chr ?: id }
-    // publishDir enabled: false
-    // publishDir "${outdir}/consensus", mode: 'move', pattern: "*.{fa,stats}"
-    publishDir "${outdir}", mode: 'move', pattern: "*filtered.vcf*"
+    publishDir "${outdir}", mode: 'copy', pattern: "*filtered.vcf.stats"
     label "bcftools"
 
     conda "$projectDir/conf/bcftools.yaml"
@@ -16,7 +14,8 @@ process joint_filter {
         val outdir
         
     output:
-        path "*.filtered.vcf*"
+        tuple val(id), path("*.filtered.vcf.gz*"), emit: vcf
+        path "*.filtered.vcf.stats"
         
     script:
         """
@@ -43,7 +42,8 @@ process joint_filter {
             ${normopt} |
         bcftools sort \
             -Oz \
-            -o ${id}\$ID.filtered.vcf.gz
+            -o ${id}\$ID.filtered.vcf.gz \
+            --temp-dir \$PWD \
             ${sortopt}
 
         tabix -p vcf ${id}\$ID.filtered.vcf.gz

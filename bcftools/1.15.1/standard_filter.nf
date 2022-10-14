@@ -35,7 +35,8 @@ process standard_filter {
             ${normopt} |
         bcftools sort \
             -Oz \
-            -o ${id}.filtered.vcf.gz
+            -o ${id}.filtered.vcf.gz \
+            --temp-dir \$PWD \
             ${sortopt}
 
         tabix -p vcf ${id}.filtered.vcf.gz
