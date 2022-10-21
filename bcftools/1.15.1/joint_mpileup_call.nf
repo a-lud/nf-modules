@@ -19,25 +19,17 @@ process joint_mpileup_call {
 
     output:
         tuple val(id), val(chr), 
-              path("regions-subset.bed"), path("*.vcf.gz*"), 
+              path(regions), path("*.vcf.gz*"), 
               file(asm), emit: vcf
         path "*vcf.stats"
         
     script:
 
         def vcftype = vcftype == 'variant' ? "--variants-only" : ""
-        def regopt = regions.baseName != 'no_regions' ? "--regions-file regions-subset.bed" : ""
+        def regopt = regions.baseName != 'no_regions' ? "--regions-file ${regions}" : ""
+        def rhc = chr ?: ''
         
         """
-        # Filter regions file
-        if [[ ${regions.baseName} != 'no_regions' ]]; then
-            awk '{ if (\$1 == "${chr}") { print } }' ${regions} > regions-subset.bed
-            ID="-${chr}"
-        else 
-            ID=""
-            touch regions-subset.bed
-        fi
-
         bcftools mpileup \
             --bam-list ${bamlist} \
             -q ${mapq} \
@@ -52,13 +44,13 @@ process joint_mpileup_call {
             --ploidy ${ploidy} \
             -Oz \
             -a FORMAT/GQ \
-            -o ${id}\$ID.vcf.gz \
+            -o ${id}${rhc}.vcf.gz \
             ${callopt}
 
         # Create summary file
-        bcftools stats ${id}\$ID.vcf.gz > ${id}\$ID.vcf.stats
+        bcftools stats ${id}${rhc}.vcf.gz > ${id}${rhc}.vcf.stats
 
-        tabix -p vcf ${id}\$ID.vcf.gz
+        tabix -p vcf ${id}${rhc}.vcf.gz
         """
 }
 

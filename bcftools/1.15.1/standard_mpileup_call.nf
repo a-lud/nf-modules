@@ -48,10 +48,3 @@ process standard_mpileup_call {
         bcftools stats ${id}.vcf.gz > ${id}.vcf.stats
         """
 }
-
-
-// # Nextflow doesn't like broken symlinks as output
-//         if [[ ! -e ${regions} ]]; then
-//             unlink ${regions}
-//             touch ${regions}
-//         fi

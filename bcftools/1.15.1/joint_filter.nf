@@ -18,19 +18,14 @@ process joint_filter {
         path "*.filtered.vcf.stats"
         
     script:
-        """
-        # Filter regions file
-        if [[ -s ${regions} ]]; then
-            ID="-${chr}"
-            REGIONS="--regions-file ${regions}"
-        else 
-            ID=''
-            REGIONS=''
-        fi
 
-        bcftools filter \
+        def regopt = regions.baseName != 'no_regions' ? "--regions-file ${regions}" : ""
+        def rhc = chr ?: ''
+        
+        """
+       bcftools filter \
             -Ou \
-            \${REGIONS} \
+            ${regopt} \
             ${filteropt} \
             ${vcf[0]} |
         bcftools view \
@@ -42,12 +37,12 @@ process joint_filter {
             ${normopt} |
         bcftools sort \
             -Oz \
-            -o ${id}\$ID.filtered.vcf.gz \
+            -o ${id}${rhc}.filtered.vcf.gz \
             --temp-dir \$PWD \
             ${sortopt}
 
-        tabix -p vcf ${id}\$ID.filtered.vcf.gz
+        tabix -p vcf ${id}${rhc}.filtered.vcf.gz
 
-        bcftools stats ${id}\$ID.filtered.vcf.gz > ${id}\$ID.filtered.vcf.stats
+        bcftools stats ${id}${rhc}.filtered.vcf.gz > ${id}${rhc}.filtered.vcf.stats
         """
 }
