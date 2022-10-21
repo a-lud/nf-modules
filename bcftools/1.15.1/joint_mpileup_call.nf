@@ -36,6 +36,7 @@ process joint_mpileup_call {
             -Q ${baseq} \
             -Ou \
             -f ${asm} \
+            -a DP,AD \
             ${regopt} \
             ${mpileupopt} |
         bcftools call \
