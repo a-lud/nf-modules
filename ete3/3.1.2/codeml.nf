@@ -34,7 +34,7 @@ process codeml {
         grep "^(.*;\$" \$O | tail -n 1 > m0.nw
 
         # Add M0 branch lengths to tree, preserving marking
-        add_branchlenghts.py ${tree} m0.nw marked-branch-lengths.nw
+        add_branchlengths.py ${tree} m0.nw marked-branch-lengths.nw
 
         # Run user models
         ete3 evol \
