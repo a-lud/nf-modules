@@ -1,6 +1,6 @@
 process standard_filter {
     tag { id }
-    publishDir "${outdir}", mode: 'move', pattern: "*filtered.vcf*"
+    publishDir "${outdir}", mode: 'copy', pattern: "*filtered.vcf*"
     label "bcftools"
 
     conda "$projectDir/conf/bcftools.yaml"
@@ -18,7 +18,7 @@ process standard_filter {
         
     script:
         def regopt = regions.baseName == 'no_regions' ? '' : "--regions-file ${regions}"
-        def filter = (dpmax && dpmin) ? "-i \"DP>=${dpmin} & DP<=${dpmax}\"" : ""
+        def filter = (dpmax && dpmin) ? "-i \"INFO/DP>=${dpmin} & INFO/DP<=${dpmax}\"" : ""
         """
         bcftools filter \
             -Ou \
