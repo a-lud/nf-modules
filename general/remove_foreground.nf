@@ -3,7 +3,7 @@ process remove_foreground {
     publishDir "${outdir}/logs", mode: 'copy', pattern: "${tree.baseName}-no-fg.log"
     
     stageInMode 'copy'
-    conda "$projectDir/conf/cogent3.yaml"
+    conda "$projectDir/conf/ete3.yaml"
 
     input:
         file tree
