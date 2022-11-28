@@ -6,6 +6,7 @@ process codeml {
     
     conda "$projectDir/conf/ete3.yaml"
     label 'ete'
+    cpus { models.tokenize(' ').size() }
 
     input:
         tuple val(id), file(alignment), file(tree)
