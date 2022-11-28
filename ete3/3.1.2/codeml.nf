@@ -1,8 +1,7 @@
 process codeml {
     tag { id }
 
-    publishDir "${outdir}", mode: 'copy', pattern: "*.{rst,out}"
-    // publishDir "${outdir}/logs", mode: 'copy', pattern: "codeml-${id}.log"
+    publishDir "${outdir}", mode: 'copy'
     
     conda "$projectDir/conf/ete3.yaml"
     label 'ete'
@@ -15,8 +14,6 @@ process codeml {
 
     output:
         path "ete-out/${id}", emit: cml
-        file "*.{out,rst}"
-        // file "codeml-${id}.log"
 
     script:
         """
@@ -47,14 +44,11 @@ process codeml {
             -v 1
         
         # remove files from working directory to reduce system clutter
-        DIRS='2NG.dN 2NG.dS 2NG.t 4fold.nuc algn lnf rst1 rub tmp.ctl tree'
-        for D in \$DIRS; do
-            find ete-out/${id} -type f -name \$D -delete
+        FLS='2NG.dN 2NG.dS 2NG.t 4fold.nuc algn lnf rst1 rub tmp.ctl tree'
+        for F in \$FLS; do
+            find ete-out/${id} -type f -name \$F -delete
         done
 
-        # Rename and move output files to current directory
-        find ete-out -type f -exec bash -c 'MODEL=\$(basename \$(dirname \$1)); MODEL=\$(echo \$MODEL | cut -d "." -f 1 | cut -d "~" -f 1 ); FILE=\$(basename \$1); cp \$1 ${id}-\$MODEL.\$FILE' shell {} \\;
-        
-        cp .command.log codeml-${id}.log
+        rm -r initial-M0 m0.nw marked-branch-lengths.nw .command.err .command.log .command.out .command.begin .command.sh
         """        
 }
