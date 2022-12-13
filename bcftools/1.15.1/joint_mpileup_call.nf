@@ -9,6 +9,7 @@ process joint_mpileup_call {
         tuple val(id), file(bams), file(bai),
               file(bamlist), file(asm),
               val(chr), file(regions)
+        val caller
         val vcftype
         val mapq
         val baseq
@@ -40,7 +41,7 @@ process joint_mpileup_call {
             ${regopt} \
             ${mpileupopt} |
         bcftools call \
-            -m \
+            ${caller} \
             ${vcftype} \
             --ploidy ${ploidy} \
             -Oz \

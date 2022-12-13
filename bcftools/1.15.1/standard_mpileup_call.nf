@@ -8,6 +8,7 @@ process standard_mpileup_call {
     input:
         tuple val(id), file(bam), file(bai),
               file(asm), file(regions)
+        val caller
         val vcftype
         val mapq
         val baseq
@@ -36,7 +37,7 @@ process standard_mpileup_call {
             ${mpileupopt} \
             ${bam} |
         bcftools call \
-            -m \
+            ${caller} \
             ${vcftype} \
             --ploidy ${ploidy} \
             -Oz \
