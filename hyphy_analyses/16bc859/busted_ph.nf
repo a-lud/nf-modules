@@ -7,6 +7,7 @@ process busted_ph {
         tuple val(id), path(msa), file(tree)
         val exedir
         val libpath
+        val analysisdir
         val batchfile
         val testlab
         val outdir
@@ -20,7 +21,7 @@ process busted_ph {
         # Clean sequences incase they have internal stop codons still
         ${exedir}/hyphy LIBPATH=${libpath} CLN Universal ${msa} "No/No" ${id}.clean.fa
 
-        ${exedir}/hyphy LIBPATH=${libpath} ${projectDir}/bin/hyphy-batch/${batchfile} \
+        ${exedir}/hyphy LIBPATH=${libpath} ${analysisdir}/BUSTED-PH/${batchfile} \
             CPU=1 \
             --alignment ${id}.clean.fa \
             --tree ${tree} \
