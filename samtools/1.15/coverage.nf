@@ -2,7 +2,6 @@ process coverage {
     tag { id }
     publishDir "${outdir}", mode: 'copy', pattern: "${id}-coverage.csv"
     label "bcftools_st"
-
     conda "$projectDir/conf/samtools.yaml"
 
     input:
@@ -30,5 +29,5 @@ process coverage {
         # Write an output file
         echo "file,reference,average,min,max,breadth" > ${id}-coverage.csv
         echo "${id},${asm.baseName},\$AVG,\$DPMIN,\$DPMAX,\$BREADTH" >> ${id}-coverage.csv
-         """
+        """
 }

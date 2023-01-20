@@ -1,7 +1,7 @@
 process busted_ph {
     tag { id }
     publishDir "${outdir}", mode: 'copy', pattern: "${id}-BUSTED_PH.json"
-    publishDir "${logdir}", mode: 'copy', pattern: "*.log"
+    publishDir "${logdir}", mode: 'copy', pattern: "*.md"
 
     input:
         tuple val(id), path(msa), file(tree)
@@ -13,22 +13,21 @@ process busted_ph {
         val logdir
 
     output:
-        file "*.json"
-        file "*.log"
+        file "*.{json,md}"
 
     script:
         """
         # Clean sequences incase they have internal stop codons still
-        ${exedir}/hyphy LIBPATH=${libpath} CLN Universal ${msa} "No/No" clean.fa &> cln.log
+        ${exedir}/hyphy LIBPATH=${libpath} CLN Universal ${msa} "No/No" ${id}.clean.fa
 
         ${exedir}/hyphy LIBPATH=${libpath} ${projectDir}/bin/hyphy-batch/${batchfile} \
             CPU=1 \
-            --alignment clean.fa \
+            --alignment ${id}.clean.fa \
             --tree ${tree} \
             --output ${id}-BUSTED_PH.json \
             --srv No \
-            --branches ${testlab} > ${id}-BUSTED_PH.log
+            --branches ${testlab} > ${id}-BUSTED_PH.md
         
-        rm clean.fa
+        rm ${id}.clean.fa
         """
 }

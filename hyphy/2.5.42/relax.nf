@@ -1,7 +1,7 @@
 process relax {
     tag { id }
     publishDir "${outdir}", mode: 'copy', pattern: "*.json"
-    publishDir "${logdir}", mode: 'copy', pattern: "*.{log,md}"
+    publishDir "${logdir}", mode: 'copy', pattern: "*.md"
 
     errorStrategy 'ignore'
 
@@ -14,12 +14,12 @@ process relax {
         val logdir
 
     output:
-        file "*.{json,log,md}"
+        file "*.{json,md}"
 
     script:
         """
         # Clean sequence of internal stop codons
-        hyphy CLN Universal ${msa} "No/No" ${id}.clean.fa &> ${id}-clean.log
+        hyphy CLN Universal ${msa} "No/No" ${id}.clean.fa
 
         # RELAX analysis
         hyphy relax CPU=1 \
