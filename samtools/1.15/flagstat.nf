@@ -10,13 +10,12 @@ process flagstat {
         val outdir
     
     output:
-        path "${bam[0].simpleName}.flagstat"
-        path "${bam[0].simpleName}.flagstat", emit: multiqc
+        path "${bam[0].simpleName}-post.flagstat", emit: multiqc
 
     script:
         """
         samtools flagstat \
             -@ ${task.cpus} \
-            ${bam[0]} > ${bam[0].simpleName}.flagstat
+            ${bam[0]} > ${bam[0].simpleName}-post.flagstat
          """
 }
