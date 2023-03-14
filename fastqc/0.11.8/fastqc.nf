@@ -1,6 +1,6 @@
 process fastqc {
     tag { id }
-    publishDir "${outdir}/fastqc", mode: 'copy'
+    publishDir "${outdir}", mode: 'copy'
     label "fastqc"
 
     conda "$projectDir/conf/fastqc.yaml"

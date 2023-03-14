@@ -1,6 +1,7 @@
 process markdup {
     tag { id }
-    publishDir "${outdir}/alignments", mode: 'copy'
+    publishDir "${outdir}", mode: 'copy', pattern: "${id}.bam"
+    publishDir "${outdir_sambamba}", mode: 'copy', pattern: '*.sambamba'
     label "markdup"
 
     conda "$projectDir/conf/sambamba.yaml"
@@ -9,6 +10,7 @@ process markdup {
         tuple val(id),
               file(bam)
         val outdir
+        val outdir_sambamba
     
     output:
         tuple val(id), path("${id}.{bam,bam.bai}"), emit: bam

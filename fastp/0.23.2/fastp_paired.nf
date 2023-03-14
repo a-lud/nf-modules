@@ -1,6 +1,6 @@
 process fastp_paired {
     tag { id }
-    publishDir "${outdir}/fastp", mode: 'copy'
+    publishDir "${outdir}", mode: 'copy'
     label "fastp"
 
     conda "$projectDir/conf/fastp.yaml"

@@ -1,6 +1,6 @@
 process kraken2 {
     tag { id }
-    publishDir "${outdir}/kraken2", mode: 'copy'
+    publishDir "${outdir}", mode: 'copy'
     label "kraken2"
 
     conda "$projectDir/conf/kraken2.yaml"
