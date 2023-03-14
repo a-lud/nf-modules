@@ -6,6 +6,7 @@ process multiqc {
 
     input:
         file files
+        path mqc_config
         val intro
         val outdir
     
@@ -13,8 +14,9 @@ process multiqc {
         path "multiqc_report.html"
 
     script:
+        // multiqc --config ${projectDir}/conf/multiqc-configs/multiqc-config.yaml --cl_config '${intro}' .
         """
-        multiqc --config ${projectDir}/conf/multiqc-config.yaml --cl_config '${intro}' .
+        multiqc --config ${mqc_config} --cl_config '${intro}' .
         """
     
     stub:
